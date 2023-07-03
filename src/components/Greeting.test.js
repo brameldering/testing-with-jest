@@ -40,4 +40,19 @@ describe("Greeting component", () => {
     const outputElement = await screen.findByText("Changed!");
     expect(outputElement).toBeInTheDocument();
   });
+  test(`No longer old text after button was clicked`, () => {
+    // Arrange
+    render(<Greeting />);
+
+    // Act
+    const buttonElement = screen.getByRole("button");
+    // const buttonElement = screen.getByText("Change Text");
+    act(() => {
+      userEvent.click(buttonElement);
+    });
+
+    // Assert
+    const outputElement = screen.queryByText(`good to see you!`, { exact: false });
+    expect(outputElement).not.toBeInTheDocument();
+  });
 });
